@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  service_java:
+    build: 
+      context: .
+      dockerfile: Dockerfile   
+    expose:
+      - 3002
+    ports:
+      - 3002:3002  
