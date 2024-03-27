@@ -33,7 +33,17 @@ public class ValidatorIntercepetor implements HandlerInterceptor {
         	return true;
         }
 
-		String className = request.getServletPath().substring(1);        
+        String testHeader = request.getHeader("X-Test-Request");
+		boolean isTestRequest = Boolean.parseBoolean(testHeader);
+
+		String className = "";
+
+		if (isTestRequest) {
+			className = request.getPathInfo().split("/")[1];
+		} else {
+			className = request.getServletPath().split("/")[1];
+		}
+		
 		className = className.substring(0, 1).toUpperCase() + className.substring(1);       
 		Class<?> clazzDTO = Class.forName("com.example.demo.dto." + className + "DTO");
 		Class<?> clazzValidator = Class.forName("com.example.demo.validators." + className + "Validator");
